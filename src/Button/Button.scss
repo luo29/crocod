@@ -1,0 +1,97 @@
+$h: 32px;
+$border-color: #d9d9d9;
+$color: #333;
+$blue: #40a9ff;
+$radius: 4px;
+$red: red;
+$grey: grey;
+.c-button {
+  box-sizing: border-box;
+  padding: 0 12px;
+  margin: 0 12px;
+  height: $h;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  background: white;
+  color: $color;
+  border: 1px solid $border-color;
+  border-radius: $radius;
+  box-shadow: 0 1px 0 fade-out(black, 0.95);
+  &[disabled] {
+    cursor: not-allowed;
+    color: $grey;
+    box-shadow: none;
+    &:hover {
+      border-color: $grey;
+      color: $grey;
+      border: 1px solid $border-color
+    }
+  }
+  &:hover{
+    color:$blue;
+    border: 1px solid $blue;
+  }
+  &.c-type-dashed {
+    border: 1px dotted $border-color;
+    &:hover {
+      border: 1px dotted $blue;
+    }
+  }
+
+  &.c-type-text{
+    border: none;
+    box-shadow: none;
+    background: none;
+    &:hover,
+    &:focus{
+      background: darken(white, 5%);
+    }
+  }
+  &.c-type-link {
+    border-color: transparent;
+    box-shadow: none;
+    color: $blue;
+    &:hover,
+    &:focus {
+      color: lighten($blue, 10%);
+    }
+  }
+  &.c-size-small {
+    height: 20px;
+  }
+  &.c-size-large {
+    height: 40px;
+  }
+  &.c-theme-primary {
+    background-color: $blue;
+    color: white;
+  }
+  &.c-theme-success {
+    background-color: rgb(120, 226, 120);
+    color: white;
+    &:hover,
+    &:focus {
+      border:1px solid rgb(120, 226, 120);
+    }
+  }
+  &.c-theme-warming {
+    background-color: rgb(237, 178, 68);
+    color: white;
+    &:hover,
+    &:focus {
+      border:1px solid rgb(237, 178, 68);
+    }
+  }
+  &.c-theme-error {
+    background-color: rgb(239, 100, 100);
+    color: white;
+    &:hover,
+    &:focus {
+      border:1px solid rgb(239, 100, 100);
+    }
+  }
+}
+
