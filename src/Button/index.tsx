@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { ButtonType, ButtonTheme,ButtonSize} from './buttonHelper';
 import './Button.scss';
 
-export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>{
+export interface ButtonProps{
   type?: ButtonType,
   theme?: ButtonTheme,
   size?: ButtonSize,
