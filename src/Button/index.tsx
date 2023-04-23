@@ -12,7 +12,6 @@ export interface ButtonProps {
   children: React.ReactNode;
   className?: string;
 }
-console.log('@12');
 
 const Button: React.FC<ButtonProps> = (props) => {
   const { children, className, theme, size, type, disabled, ...rest } = props;

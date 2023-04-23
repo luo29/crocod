@@ -15,19 +15,5 @@ group:
 然后在你的代码中写入下面的代码
 
 ```js
-import { Button, Tabs, Switch, Dialog } from 'banana-ui';
-```
 
-就可以使用我提供的组件了。
-
-React 单文件组件
-代码示例：
-
-```js
-import React from 'react';
-import { Button } from 'banana-ui';
-
-const App = () => {
-  return <Button>+1</Button>;
-};
 ```

@@ -3,14 +3,17 @@ lockfileVersion: 5.4
 specifiers:
   '@commitlint/cli': ^17.1.2
   '@commitlint/config-conventional': ^17.1.0
+  '@types/lodash': ^4.14.194
   '@types/react': ^18.0.0
   '@types/react-dom': ^18.0.0
   '@umijs/lint': ^4.0.0
+  classnames: ^2.3.2
   dumi: ^2.0.2
   eslint: ^8.23.0
   father: ^4.1.0
   husky: ^8.0.1
   lint-staged: ^13.0.3
+  lodash: ^4.17.21
   prettier: ^2.7.1
   prettier-plugin-organize-imports: ^3.0.0
   prettier-plugin-packagejson: ^2.2.18
@@ -18,9 +21,14 @@ specifiers:
   react-dom: ^18.0.0
   stylelint: ^14.9.1
 
+dependencies:
+  classnames: registry.npmmirror.com/classnames/2.3.2
+  lodash: registry.npmmirror.com/lodash/4.17.21
+
 devDependencies:
   '@commitlint/cli': registry.npmmirror.com/@commitlint/cli/17.6.1
   '@commitlint/config-conventional': registry.npmmirror.com/@commitlint/config-conventional/17.6.1
+  '@types/lodash': registry.npmmirror.com/@types/lodash/4.14.194
   '@types/react': registry.npmmirror.com/@types/react/18.0.37
   '@types/react-dom': registry.npmmirror.com/@types/react-dom/18.0.11
   '@umijs/lint': registry.npmmirror.com/@umijs/lint/4.0.65_pg3svqdtgx725zafs2xjv5mkry
@@ -2650,6 +2658,12 @@ packages:
       '@types/node': registry.npmmirror.com/@types/node/18.15.11
     dev: true
 
+  registry.npmmirror.com/@types/lodash/4.14.194:
+    resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.194.tgz}
+    name: '@types/lodash'
+    version: 4.14.194
+    dev: true
+
   registry.npmmirror.com/@types/mdast/3.0.11:
     resolution: {integrity: sha512-Y/uImid8aAwrEA24/1tcRZwpxX3pIFTSilcNDKSPn+Y2iDywSEachzRuvgAYYLR3wpGXAsMbv5lvKLDZLeYPAw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/mdast/-/mdast-3.0.11.tgz}
     name: '@types/mdast'
@@ -4562,7 +4576,6 @@ packages:
     resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/classnames/-/classnames-2.3.2.tgz}
     name: classnames
     version: 2.3.2
-    dev: true
 
   registry.npmmirror.com/clean-css/5.3.2:
     resolution: {integrity: sha512-JVJbM+f3d3Q704rF4bqQ5UUyTtuJ0JRKNbTKVEeujCCBoMdkEi+V+e8oktO9qGQNSvHrFTM6JZRXrUvGR1czww==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/clean-css/-/clean-css-5.3.2.tgz}
@@ -9094,7 +9107,6 @@ packages:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lodash/-/lodash-4.17.21.tgz}
     name: lodash
     version: 4.17.21
-    dev: true
 
   registry.npmmirror.com/log-symbols/2.2.0:
     resolution: {integrity: sha512-VeIAFslyIerEJLXHziedo2basKbMKtTw3vfn5IzG0XTjhAVEJyNHnL2p7vc+wBDSdQuUpNw3M2u6xb9QsAY5Eg==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/log-symbols/-/log-symbols-2.2.0.tgz}
