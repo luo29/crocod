@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import classnames from 'classnames';
-import React, { forwardRef, ReactElement, useRef, useState } from 'react';
+import React, { forwardRef, } from 'react';
 import ReactDOM from 'react-dom';
-import { usePosition } from './hooks/usePosition';
 import { ToolTipPlacement, TooltipTrigger } from './tooltipHelper';
-// import {useTrigger} from "./hooks/useTrigger"
+import Portal from '../common/Portal';
 import './Tooltip.scss';
+import useControlled from '../hooks/useControlled';
+import { useTrigger } from './hooks/useTrigger';
 export interface TooltipProps {
   classname?: string;
   placement?: ToolTipPlacement;
@@ -22,75 +23,41 @@ export interface TooltipProps {
   destroyOnClose?: boolean;
 
   children?: React.ReactNode;
+
+  attach:string
+  /**
+ * 当浮层隐藏或显示时触发，`trigger=document` 表示点击非浮层元素触发；`trigger=context-menu` 表示右击触发
+ */
+  onVisibleChange?: (visible: boolean) => void;
 }
 const Tooltip: React.FC<TooltipProps> = (props) => {
-  const { children, content, placement = 'left', trigger = 'click' } = props;
-  const [visible, setVisible] = useState(false);
-  const child = React.Children.only(children);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const { children, content, placement = 'left', trigger = 'click' ,attach} = props;
 
-  const [position, setPosition] = useState<{ top: number; left: number }>({
-    top: 0,
-    left: 0,
-  });
+  const [visible, onVisibleChange] = useControlled(props, 'visible', props.onVisibleChange);
 
-  const UsehandleMouseEvents = (e: MouseEvent) => {
-    const { top, left } = usePosition(
-      e.currentTarget as HTMLElement,
-      tooltipRef.current as HTMLElement,
-      placement,
-    );
-    setPosition({ top, left });
-  };
-  const handleMouseClick = (e: MouseEvent) => {
-    if (trigger === 'click') {
-      if (!visible) {
-        setVisible(true);
-      } else {
-        setVisible(false);
-      }
-      UsehandleMouseEvents(e);
-    }
-  };
-  const handleMouseFocus = (e: MouseEvent) => {
-    if (trigger === 'focus') {
-      setVisible(true);
-      UsehandleMouseEvents(e);
-    }
-  };
-  const handleMouseEnter = (e: MouseEvent) => {
-    if (trigger === 'hover') {
-      setVisible(true);
-      UsehandleMouseEvents(e);
-    }
-  };
-  const handleMouseLeave = () => {
-    if (trigger === 'hover') {
-      setVisible(false);
-    }
-  };
+  const { tooltipRef, position, getTriggerNode, getPopupProps } = useTrigger({ visible, onVisibleChange, placement, trigger })
+
+  const triggerNode = getTriggerNode(children)
 
   return (
     <>
-      {React.cloneElement(children as ReactElement, {
-        // @ts-ignore
-        className: classnames('g-tooltip-trigger', child.props.className),
-        onClick: handleMouseClick,
-        onFocus: handleMouseFocus,
-        onMouseEnter: handleMouseEnter,
-        onMouseLeave: handleMouseLeave,
-      })}
-      <TooltipComponent
-        content={content}
-        visible={visible}
-        ref={tooltipRef}
-        position={position}
-        placement={placement}
-        trigger={trigger}
-      />
+      {triggerNode}
+      <Portal triggerNode={triggerNode} attach={attach} ref={portalRef}>
+        <TooltipComponent
+          content={content}
+          visible={visible}
+          ref={tooltipRef}
+          position={position}
+          placement={placement}
+          trigger={trigger}
+        />
+      </Portal>
+
     </>
   );
 };
+
+
 interface TooltipComponentProps {
   content?: string;
   visible?: boolean;
@@ -104,7 +71,7 @@ const TooltipComponent = forwardRef<HTMLDivElement, TooltipComponentProps>(
     const { content, visible, position, placement } = props;
     const { top, left } = position;
 
-    return ReactDOM.createPortal(
+    return (
       <div
         className={classnames('g-tooltip-text', {
           'g-tooltip-text-open': visible,
@@ -118,9 +85,8 @@ const TooltipComponent = forwardRef<HTMLDivElement, TooltipComponentProps>(
         }}
       >
         {content}
-      </div>,
-      document.body,
-    );
+      </div>
+    )
   },
 );
 export default Tooltip;

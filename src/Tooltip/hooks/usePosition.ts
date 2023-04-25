@@ -1,4 +1,4 @@
-export function usePosition(
+export function getPosition(
   triggerElement: HTMLElement,
   tooltipElement: HTMLElement,
   placement: 'left' | 'top' | 'bottom' | 'right',
