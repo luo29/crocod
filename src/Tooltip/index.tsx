@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import classnames from 'classnames';
-import React, { forwardRef, } from 'react';
-import ReactDOM from 'react-dom';
+import React, { forwardRef, useRef, } from 'react';
 import { ToolTipPlacement, TooltipTrigger } from './tooltipHelper';
 import Portal from '../common/Portal';
 import './Tooltip.scss';
@@ -24,30 +23,30 @@ export interface TooltipProps {
 
   children?: React.ReactNode;
 
-  attach:string
+  attach: string
   /**
  * 当浮层隐藏或显示时触发，`trigger=document` 表示点击非浮层元素触发；`trigger=context-menu` 表示右击触发
  */
   onVisibleChange?: (visible: boolean) => void;
 }
 const Tooltip: React.FC<TooltipProps> = (props) => {
-  const { children, content, placement = 'left', trigger = 'click' ,attach} = props;
-
+  const { children, content, placement = 'left', trigger = 'click', attach } = props;
   const [visible, onVisibleChange] = useControlled(props, 'visible', props.onVisibleChange);
+  const portalRef = useRef(null); // portal dom 元素
 
-  const { tooltipRef, position, getTriggerNode, getPopupProps } = useTrigger({ visible, onVisibleChange, placement, trigger })
+  const { tooltipRef, getTriggerNode, getPopupProps } = useTrigger({ visible, onVisibleChange, placement, trigger })
 
   const triggerNode = getTriggerNode(children)
 
   return (
     <>
       {triggerNode}
-      <Portal triggerNode={triggerNode} attach={attach} ref={portalRef}>
+      <Portal attach={attach} ref={portalRef}>
         <TooltipComponent
+          {...getPopupProps()}
           content={content}
           visible={visible}
           ref={tooltipRef}
-          position={position}
           placement={placement}
           trigger={trigger}
         />
@@ -61,15 +60,14 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
 interface TooltipComponentProps {
   content?: string;
   visible?: boolean;
-  position: { top: number; left: number };
   placement: ToolTipPlacement;
   trigger?: string;
+  [k in string]: any;
 }
 
 const TooltipComponent = forwardRef<HTMLDivElement, TooltipComponentProps>(
   (props, ref) => {
-    const { content, visible, position, placement } = props;
-    const { top, left } = position;
+    const { content, visible, placement, ...rest } = props;
 
     return (
       <div
@@ -78,11 +76,7 @@ const TooltipComponent = forwardRef<HTMLDivElement, TooltipComponentProps>(
           [`g-tooltip-${placement}`]: placement,
         })}
         ref={ref}
-        //@ts-ignore
-        style={{
-          ...(visible ? { top, left } : { top: -9999, left: -9999 }),
-          position: 'absolute',
-        }}
+        {...rest}
       >
         {content}
       </div>

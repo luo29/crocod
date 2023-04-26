@@ -1,6 +1,7 @@
-import { useState, useRef, ReactElement, isValidElement, isFragment, ReactNode, cloneElement } from 'react';
+import { useState, useRef, ReactElement, isValidElement, ReactNode, cloneElement } from 'react';
 import { getPosition } from './usePosition';
 import { ToolTipPlacement, TooltipTrigger } from '../tooltipHelper';
+import React from 'react';
 
 interface UseTriggerParams {
   visible?: boolean;
@@ -57,7 +58,8 @@ export const useTrigger = (params: UseTriggerParams) => {
 
   const getTriggerProps = (triggerNode: ReactElement) => {
     return {
-      handleMouseClick: (e: MouseEvent) => {
+      onClick: (e: MouseEvent) => {
+        console.log('onClick')
         if (trigger === 'click') {
           if (!visible) {
             onVisibleChange(true);
@@ -67,7 +69,8 @@ export const useTrigger = (params: UseTriggerParams) => {
           handleMouseEvents(e);
         }
       },
-      handleMouseFocus: (e: MouseEvent) => {
+      onFocus: (e: MouseEvent) => {
+        console.log('onFocus')
         if (trigger === 'focus') {
           onVisibleChange(true);
           handleMouseEvents(e);
@@ -89,9 +92,11 @@ export const useTrigger = (params: UseTriggerParams) => {
 
   // 整理 trigger 元素
   const getTriggerNode = (children: ReactNode) => {
-    const triggerNode =
-      isValidElement(children) && !isFragment(children) ? children : <span className="t-trigger" > {children} </span>;
 
+    const triggerNode =
+      isValidElement(children) && children?.type !== '' ? children : <span className="t-trigger" > {children} </span>;
+
+    console.log('triggerNode', cloneElement(triggerNode, getTriggerProps(triggerNode)))
     return cloneElement(triggerNode, getTriggerProps(triggerNode));
   }
 
