@@ -1,0 +1,78 @@
+$blue: #40a9ff;
+$success:rgb(120, 226, 120);
+$warning:rgb(237, 178, 68);
+$error:rgb(239, 100, 100);
+.c-input{
+  outline: none;
+  &:focus{
+    border:1px $blue solid;
+    box-shadow: 0px 0px 3px 0px $blue;
+  }
+  &.c-size-default{
+    height: 23px;
+    width: 200px;
+  }
+  &.c-size-large{
+    height: 30px;
+    width: 250px;
+  }
+  &.c-align-left {
+    text-align: left;
+  }
+  &.c-align-center{
+    text-align: center;
+  }
+  &.c-align-right {
+    text-align: right;
+  }
+  &.c-status-default {
+    &+div{
+      color: gray;
+      font-size: 10px;
+    }
+  }
+  &.c-status-success {
+    border:1px $success solid;
+    &:focus{
+      box-shadow: 0px 0px 3px 0px $success;
+    }
+    &+div{
+      color: $success;
+      font-size: 10px;
+    }
+  }
+  &.c-status-warning {
+    border:1px $warning solid;
+    &:focus{
+      box-shadow: 0px 0px 3px 0px $warning;
+    }
+    &+div{
+      color: $warning;
+      font-size: 10px;
+    }
+  }
+  &.c-status-error {
+    border:1px $error solid;
+    &:focus{
+      box-shadow: 0px 0px 3px 0px $error;
+    }
+    &+div{
+      color: $error;
+      font-size: 10px;
+    }
+  }
+  &+i{
+    display: inline-block;
+    cursor: pointer;
+    left: -20px;
+    position: relative;
+    background-color: rgb(210, 207, 207);
+    color: black;
+    border: 1px black solid;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 12px;
+  }
+}

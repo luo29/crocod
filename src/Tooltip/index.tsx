@@ -3,9 +3,10 @@ import classnames from 'classnames';
 import React, { forwardRef, useRef, } from 'react';
 import { ToolTipPlacement, TooltipTrigger } from './tooltipHelper';
 import Portal from '../common/Portal';
-import './Tooltip.scss';
 import useControlled from '../hooks/useControlled';
 import { useTrigger } from './hooks/useTrigger';
+import './Tooltip.scss';
+
 export interface TooltipProps {
   classname?: string;
   placement?: ToolTipPlacement;
@@ -25,8 +26,8 @@ export interface TooltipProps {
 
   attach: string
   /**
- * 当浮层隐藏或显示时触发，`trigger=document` 表示点击非浮层元素触发；`trigger=context-menu` 表示右击触发
- */
+   * 当浮层隐藏或显示时触发，`trigger=document` 表示点击非浮层元素触发；`trigger=context-menu` 表示右击触发
+   */
   onVisibleChange?: (visible: boolean) => void;
 }
 const Tooltip: React.FC<TooltipProps> = (props) => {
@@ -36,7 +37,7 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
 
   const { tooltipRef, getTriggerNode, getPopupProps } = useTrigger({ visible, onVisibleChange, placement, trigger })
 
-  const triggerNode = getTriggerNode(children)
+  const triggerNode = getTriggerNode(children);
 
   return (
     <>
@@ -51,11 +52,9 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
           trigger={trigger}
         />
       </Portal>
-
     </>
   );
 };
-
 
 interface TooltipComponentProps {
   content?: string;
@@ -80,7 +79,7 @@ const TooltipComponent = forwardRef<HTMLDivElement, TooltipComponentProps>(
       >
         {content}
       </div>
-    )
+    );
   },
 );
 export default Tooltip;

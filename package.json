@@ -45,7 +45,8 @@
   },
   "dependencies": {
     "classnames": "^2.3.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "react-is": "^18.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

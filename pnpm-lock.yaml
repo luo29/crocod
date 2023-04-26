@@ -19,11 +19,13 @@ specifiers:
   prettier-plugin-packagejson: ^2.2.18
   react: ^18.0.0
   react-dom: ^18.0.0
+  react-is: ^18.2.0
   stylelint: ^14.9.1
 
 dependencies:
   classnames: registry.npmmirror.com/classnames/2.3.2
   lodash: registry.npmmirror.com/lodash/4.17.21
+  react-is: registry.npmmirror.com/react-is/18.2.0
 
 devDependencies:
   '@commitlint/cli': registry.npmmirror.com/@commitlint/cli/17.6.1
@@ -12516,6 +12518,12 @@ packages:
     name: react-is
     version: 16.13.1
     dev: true
+
+  registry.npmmirror.com/react-is/18.2.0:
+    resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/react-is/-/react-is-18.2.0.tgz}
+    name: react-is
+    version: 18.2.0
+    dev: false
 
   registry.npmmirror.com/react-merge-refs/1.1.0:
     resolution: {integrity: sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/react-merge-refs/-/react-merge-refs-1.1.0.tgz}
