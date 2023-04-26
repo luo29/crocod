@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import classnames from 'classnames';
-import React, { forwardRef, } from 'react';
-import ReactDOM from 'react-dom';
-import { ToolTipPlacement, TooltipTrigger } from './tooltipHelper';
+import React, { forwardRef } from 'react';
+// import ReactDOM from 'react-dom';
 import Portal from '../common/Portal';
-import './Tooltip.scss';
 import useControlled from '../hooks/useControlled';
 import { useTrigger } from './hooks/useTrigger';
+import './Tooltip.scss';
+import { ToolTipPlacement, TooltipTrigger } from './tooltipHelper';
 export interface TooltipProps {
   classname?: string;
   placement?: ToolTipPlacement;
@@ -24,25 +24,40 @@ export interface TooltipProps {
 
   children?: React.ReactNode;
 
-  attach:string
+  attach: string;
   /**
- * 当浮层隐藏或显示时触发，`trigger=document` 表示点击非浮层元素触发；`trigger=context-menu` 表示右击触发
- */
+   * 当浮层隐藏或显示时触发，`trigger=document` 表示点击非浮层元素触发；`trigger=context-menu` 表示右击触发
+   */
   onVisibleChange?: (visible: boolean) => void;
 }
 const Tooltip: React.FC<TooltipProps> = (props) => {
-  const { children, content, placement = 'left', trigger = 'click' ,attach} = props;
+  const {
+    children,
+    content,
+    placement = 'left',
+    trigger = 'click',
+    attach,
+  } = props;
 
-  const [visible, onVisibleChange] = useControlled(props, 'visible', props.onVisibleChange);
+  const [visible, onVisibleChange] = useControlled(
+    props,
+    'visible',
+    props.onVisibleChange,
+  );
 
-  const { tooltipRef, position, getTriggerNode, getPopupProps } = useTrigger({ visible, onVisibleChange, placement, trigger })
+  const { tooltipRef, position, getTriggerNode } = useTrigger({
+    visible,
+    onVisibleChange,
+    placement,
+    trigger,
+  });
 
-  const triggerNode = getTriggerNode(children)
+  const triggerNode = getTriggerNode(children);
 
   return (
     <>
       {triggerNode}
-      <Portal triggerNode={triggerNode} attach={attach} ref={portalRef}>
+      <Portal triggerNode={triggerNode} attach={attach} ref={Portal}>
         <TooltipComponent
           content={content}
           visible={visible}
@@ -52,11 +67,9 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
           trigger={trigger}
         />
       </Portal>
-
     </>
   );
 };
-
 
 interface TooltipComponentProps {
   content?: string;
@@ -86,7 +99,7 @@ const TooltipComponent = forwardRef<HTMLDivElement, TooltipComponentProps>(
       >
         {content}
       </div>
-    )
+    );
   },
 );
 export default Tooltip;

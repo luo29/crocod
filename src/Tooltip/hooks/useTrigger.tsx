@@ -1,6 +1,16 @@
-import { useState, useRef, ReactElement, isValidElement, isFragment, ReactNode, cloneElement } from 'react';
-import { getPosition } from './usePosition';
+import {
+  cloneElement,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+  useRef,
+  useState,
+} from 'react';
+import { isFragment } from 'react-is';
+
+import React from 'react';
 import { ToolTipPlacement, TooltipTrigger } from '../tooltipHelper';
+import { getPosition } from './usePosition';
 
 interface UseTriggerParams {
   visible?: boolean;
@@ -10,7 +20,7 @@ interface UseTriggerParams {
 }
 
 export const useTrigger = (params: UseTriggerParams) => {
-  const { visible, onVisibleChange, placement, trigger } = params
+  const { visible, onVisibleChange, placement, trigger } = params;
 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -36,25 +46,26 @@ export const useTrigger = (params: UseTriggerParams) => {
         ...(visible ? { top, left } : { top: -9999, left: -9999 }),
         position: 'absolute',
       },
-      onMouseEnter: (e: MouseEvent) => {
+      onMouseEnter: () => {
         if (trigger === 'hover') {
-          onVisibleChange(true)
+          onVisibleChange(true);
         }
       },
-      onMouseLeave: (e: MouseEvent) => {
+      onMouseLeave: () => {
         if (trigger === 'hover') {
-          onVisibleChange(false)
+          onVisibleChange(false);
         }
       },
       onMouseDown: () => {
-        onVisibleChange(true)
+        onVisibleChange(true);
       },
       onTouchEnd: () => {
-        onVisibleChange(true)
+        onVisibleChange(true);
       },
     };
-  }
+  };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getTriggerProps = (triggerNode: ReactElement) => {
     return {
       handleMouseClick: (e: MouseEvent) => {
@@ -83,22 +94,26 @@ export const useTrigger = (params: UseTriggerParams) => {
         if (trigger === 'hover') {
           onVisibleChange(false);
         }
-      }
-    }
-  }
+      },
+    };
+  };
 
   // 整理 trigger 元素
   const getTriggerNode = (children: ReactNode) => {
     const triggerNode =
-      isValidElement(children) && !isFragment(children) ? children : <span className="t-trigger" > {children} </span>;
+      isValidElement(children) && !isFragment(children) ? (
+        children
+      ) : (
+        <span className="c-trigger"> {children} </span>
+      );
 
     return cloneElement(triggerNode, getTriggerProps(triggerNode));
-  }
+  };
 
   return {
     tooltipRef,
     position,
     getTriggerNode,
-    getPopupProps
+    getPopupProps,
   };
-}
+};
