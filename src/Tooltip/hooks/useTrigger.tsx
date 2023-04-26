@@ -47,6 +47,8 @@ export const useTrigger = (params: UseTriggerParams) => {
         position: 'absolute',
       },
       onMouseEnter: () => {
+        console.log(212);
+
         if (trigger === 'hover') {
           onVisibleChange(true);
         }
@@ -68,7 +70,7 @@ export const useTrigger = (params: UseTriggerParams) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getTriggerProps = (triggerNode: ReactElement) => {
     return {
-      handleMouseClick: (e: MouseEvent) => {
+      onClick: (e: MouseEvent) => {
         if (trigger === 'click') {
           if (!visible) {
             onVisibleChange(true);
@@ -78,13 +80,13 @@ export const useTrigger = (params: UseTriggerParams) => {
           handleMouseEvents(e);
         }
       },
-      handleMouseFocus: (e: MouseEvent) => {
+      onFocus: (e: MouseEvent) => {
         if (trigger === 'focus') {
           onVisibleChange(true);
           handleMouseEvents(e);
         }
       },
-      handleMouseEnter: (e: MouseEvent) => {
+      onHover: (e: MouseEvent) => {
         if (trigger === 'hover') {
           onVisibleChange(true);
           handleMouseEvents(e);
