@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import classnames from 'classnames';
-import React, { forwardRef } from 'react';
-// import ReactDOM from 'react-dom';
+import React, { useRef } from 'react';
+import CSSTransition from 'react-transition-group/CSSTransition';
 import Portal from '../common/Portal';
 import useControlled from '../hooks/useControlled';
-import { useTrigger } from './hooks/useTrigger';
 import './Tooltip.scss';
+import { useTrigger } from './hooks/useTrigger';
 import { ToolTipPlacement, TooltipTrigger } from './tooltipHelper';
+
 export interface TooltipProps {
   classname?: string;
   placement?: ToolTipPlacement;
@@ -15,7 +15,6 @@ export interface TooltipProps {
   visible?: boolean;
 
   content?: string;
-
   // 是否显示空内容
   hideEmptyPopup?: boolean;
 
@@ -29,7 +28,9 @@ export interface TooltipProps {
    * 当浮层隐藏或显示时触发，`trigger=document` 表示点击非浮层元素触发；`trigger=context-menu` 表示右击触发
    */
   onVisibleChange?: (visible: boolean) => void;
+  delay?: number;
 }
+
 const Tooltip: React.FC<TooltipProps> = (props) => {
   const {
     children,
@@ -37,15 +38,15 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
     placement = 'left',
     trigger = 'click',
     attach,
+    ...rest
   } = props;
-
   const [visible, onVisibleChange] = useControlled(
     props,
     'visible',
     props.onVisibleChange,
   );
-
-  const { tooltipRef, position, getTriggerNode } = useTrigger({
+  const portalRef = useRef(null); // portal dom 元素
+  const { tooltipRef, getTriggerNode, position } = useTrigger({
     visible,
     onVisibleChange,
     placement,
@@ -53,53 +54,40 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
   });
 
   const triggerNode = getTriggerNode(children);
-
+  const { left, top } = position;
+  const handleMouseLeave = () => {
+    if (trigger === 'hover') {
+      onVisibleChange(false);
+    }
+  };
   return (
     <>
-      {triggerNode}
-      <Portal triggerNode={triggerNode} attach={attach} ref={Portal}>
-        <TooltipComponent
-          content={content}
-          visible={visible}
-          ref={tooltipRef}
-          position={position}
-          placement={placement}
-          trigger={trigger}
-        />
+      <Portal attach={attach} ref={portalRef}>
+        <CSSTransition appear in={visible} timeout={5000} classNames="why">
+          <div
+            className={classnames('g-tooltip-text', {
+              why: visible,
+              [`g-tooltip-${placement}`]: placement,
+            })}
+            // eslint-disable-next-line react/no-unknown-property
+
+            ref={tooltipRef}
+            {...rest}
+            style={{
+              ...(visible ? { left, top } : { top: -9999, left: -9999 }),
+            }}
+            onMouseEnter={() => {
+              onVisibleChange(true);
+            }}
+            onMouseLeave={handleMouseLeave}
+          >
+            {content}
+          </div>
+        </CSSTransition>
       </Portal>
+      {triggerNode}
     </>
   );
 };
 
-interface TooltipComponentProps {
-  content?: string;
-  visible?: boolean;
-  position: { top: number; left: number };
-  placement: ToolTipPlacement;
-  trigger?: string;
-}
-
-const TooltipComponent = forwardRef<HTMLDivElement, TooltipComponentProps>(
-  (props, ref) => {
-    const { content, visible, position, placement } = props;
-    const { top, left } = position;
-
-    return (
-      <div
-        className={classnames('g-tooltip-text', {
-          'g-tooltip-text-open': visible,
-          [`g-tooltip-${placement}`]: placement,
-        })}
-        ref={ref}
-        //@ts-ignore
-        style={{
-          ...(visible ? { top, left } : { top: -9999, left: -9999 }),
-          position: 'absolute',
-        }}
-      >
-        {content}
-      </div>
-    );
-  },
-);
 export default Tooltip;

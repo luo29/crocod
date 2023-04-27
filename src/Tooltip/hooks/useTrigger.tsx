@@ -1,14 +1,11 @@
-import {
-  cloneElement,
-  isValidElement,
+import React, {
   ReactElement,
   ReactNode,
+  cloneElement,
+  isValidElement,
   useRef,
   useState,
 } from 'react';
-import { isFragment } from 'react-is';
-
-import React from 'react';
 import { ToolTipPlacement, TooltipTrigger } from '../tooltipHelper';
 import { getPosition } from './usePosition';
 
@@ -47,8 +44,6 @@ export const useTrigger = (params: UseTriggerParams) => {
         position: 'absolute',
       },
       onMouseEnter: () => {
-        console.log(212);
-
         if (trigger === 'hover') {
           onVisibleChange(true);
         }
@@ -71,6 +66,7 @@ export const useTrigger = (params: UseTriggerParams) => {
   const getTriggerProps = (triggerNode: ReactElement) => {
     return {
       onClick: (e: MouseEvent) => {
+        console.log('onClick');
         if (trigger === 'click') {
           if (!visible) {
             onVisibleChange(true);
@@ -86,13 +82,15 @@ export const useTrigger = (params: UseTriggerParams) => {
           handleMouseEvents(e);
         }
       },
-      onHover: (e: MouseEvent) => {
+      onMouseOver: (e: MouseEvent) => {
+        console.log('onMouse');
+
         if (trigger === 'hover') {
           onVisibleChange(true);
           handleMouseEvents(e);
         }
       },
-      handleMouseLeave: () => {
+      onMouseLeave: () => {
         if (trigger === 'hover') {
           onVisibleChange(false);
         }
@@ -103,12 +101,17 @@ export const useTrigger = (params: UseTriggerParams) => {
   // 整理 trigger 元素
   const getTriggerNode = (children: ReactNode) => {
     const triggerNode =
-      isValidElement(children) && !isFragment(children) ? (
+      // eslint-disable-next-line react/no-unknown-property
+      isValidElement(children) && children?.type !== '' ? (
         children
       ) : (
-        <span className="c-trigger"> {children} </span>
+        <span className="t-trigger"> {children} </span>
       );
 
+    console.log(
+      'triggerNode',
+      cloneElement(triggerNode, getTriggerProps(triggerNode)),
+    );
     return cloneElement(triggerNode, getTriggerProps(triggerNode));
   };
 

@@ -17,7 +17,7 @@
     border-radius: 2px;
     z-index: 1000;
     font-size: 14px;
-    &.g-tooltip-text-open {
+    &.why {
       visibility: visible;
       &.g-tooltip-top {
         margin-top: -8px;
@@ -61,4 +61,23 @@
       }
     }
   }
+}
+.why-appear, .why-enter {
+  opacity: 0;
+}
+
+.why-appear-active, .why-enter-active {
+  opacity: 1;
+  transition: opacity .8s ease;
+}
+
+/* 离开动画 */
+.why-exit {
+  opacity: 1;
+}
+
+.why-exit-active {
+  opacity: 0;
+  transition: opacity .8s ease;
+
 }
