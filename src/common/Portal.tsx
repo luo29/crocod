@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 
 type CSSSelector = string;
 
-type AttachNodeReturnValue = HTMLElement | Element | Document;
+type AttachNodeReturnValue = HTMLElement | Element | Document | null;
 type AttachNode = CSSSelector | ((triggerNode?: HTMLElement) => AttachNodeReturnValue);
 
 const classPrefix = 'c'
@@ -35,7 +35,7 @@ export function getAttach(attach: PortalProps['attach'], triggerNode?: HTMLEleme
   }
 
   // fix el in iframe
-  if (el && el.nodeType === 1) return el;
+  if (el && el?.nodeType === 1) return el;
 
   return document.body;
 }

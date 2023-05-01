@@ -19,7 +19,6 @@ export interface InputProps {
   clearable?: boolean;
 }
 const Input: React.FC<InputProps> = (props) => {
-  const inputRef = useRef();
   const {
     size = 'default',
     align = 'left',
@@ -32,14 +31,21 @@ const Input: React.FC<InputProps> = (props) => {
     clearable,
     ...rest
   } = props;
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const emptyInput = () => {
-    inputRef.current.value = '';
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
   };
+
   const classes = classNames('c-input', {
     [`c-size-${size}`]: size,
     [`c-status-${status}`]: status,
     [`c-align-${align}`]: align,
   });
+
   return (
     <>
       <input
@@ -51,6 +57,7 @@ const Input: React.FC<InputProps> = (props) => {
         type={type}
         {...rest}
       ></input>
+
       {clearable && size === 'default' && <i onClick={emptyInput}>x</i>}
       {tip && <div>{tip}</div>}
     </>

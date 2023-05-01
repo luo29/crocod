@@ -40,8 +40,8 @@ export const useTrigger = (params: UseTriggerParams) => {
     const { top, left } = position;
     return {
       style: {
-        ...(visible ? { top, left } : { top: -9999, left: -9999 }),
-        position: 'absolute',
+        top: top + 'px',
+        left: left + 'px',
       },
       onMouseEnter: () => {
         if (trigger === 'hover') {
@@ -66,13 +66,8 @@ export const useTrigger = (params: UseTriggerParams) => {
   const getTriggerProps = (triggerNode: ReactElement) => {
     return {
       onClick: (e: MouseEvent) => {
-        console.log('onClick');
         if (trigger === 'click') {
-          if (!visible) {
-            onVisibleChange(true);
-          } else {
-            onVisibleChange(false);
-          }
+          onVisibleChange(!visible);
           handleMouseEvents(e);
         }
       },
@@ -83,8 +78,6 @@ export const useTrigger = (params: UseTriggerParams) => {
         }
       },
       onMouseOver: (e: MouseEvent) => {
-        console.log('onMouse');
-
         if (trigger === 'hover') {
           onVisibleChange(true);
           handleMouseEvents(e);
@@ -108,10 +101,6 @@ export const useTrigger = (params: UseTriggerParams) => {
         <span className="t-trigger"> {children} </span>
       );
 
-    console.log(
-      'triggerNode',
-      cloneElement(triggerNode, getTriggerProps(triggerNode)),
-    );
     return cloneElement(triggerNode, getTriggerProps(triggerNode));
   };
 

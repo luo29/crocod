@@ -3,26 +3,25 @@
     box-sizing: border-box;
   }
   &-text {
-    box-sizing: border-box;
+    z-index: 1000;
+    display: none;
     position: absolute;
-    top: -9999px;
-    left: -9999px;
-    visibility: hidden;
-    display: inline-flex;
+    // visibility: hidden;
     justify-content: center;
     align-items: center;
     background: #404040;
     color: white;
     padding: 8px;
     border-radius: 2px;
-    z-index: 1000;
     font-size: 14px;
+    box-sizing: border-box;
+
     &.why {
       visibility: visible;
       &.g-tooltip-top {
         margin-top: -8px;
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           border: 8px solid transparent;
           top: 100%;
@@ -32,7 +31,7 @@
       &.g-tooltip-bottom {
         margin-top: 8px;
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           border: 8px solid transparent;
           bottom: 100%;
@@ -42,7 +41,7 @@
       &.g-tooltip-left {
         margin-left: -8px;
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           border: 8px solid transparent;
           left: 100%;
@@ -52,7 +51,7 @@
       &.g-tooltip-right {
         margin-left: 8px;
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           border: 8px solid transparent;
           right: 100%;
@@ -62,13 +61,16 @@
     }
   }
 }
-.why-appear, .why-enter {
+
+.why-enter {
+  display: block;
   opacity: 0;
 }
 
-.why-appear-active, .why-enter-active {
+.why-appear-active,
+.why-enter-active {
   opacity: 1;
-  transition: opacity .8s ease;
+  transition: opacity 0.8s ease;
 }
 
 /* 离开动画 */
@@ -78,6 +80,9 @@
 
 .why-exit-active {
   opacity: 0;
-  transition: opacity .8s ease;
+  transition: opacity 0.8s ease;
+}
 
+.why-exit-done {
+  display: none;
 }

@@ -3,12 +3,11 @@ export function getPosition(
   tooltipElement: HTMLElement,
   placement: 'left' | 'top' | 'bottom' | 'right',
 ) {
-  console.log(triggerElement, '22222');
-  console.log(tooltipElement, '11111');
 
   const { left, width, top, height } = triggerElement.getBoundingClientRect();
   const { height: height2, width: width2 } =
     tooltipElement.getBoundingClientRect();
+
   const position = {
     top: {
       top: window.scrollY + top - height2,
